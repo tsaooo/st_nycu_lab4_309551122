@@ -46,7 +46,7 @@ jobs:
         with:
           name: package
           path: target/*.jar
-  Release jar:
+  Release_jar:
     needs: Assemble_with_Maven
     runs-on: ubuntu-latest
     env:
