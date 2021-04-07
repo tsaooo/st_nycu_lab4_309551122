@@ -61,5 +61,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: ${{ steps.download.outputs.download-path }}
+          files: ${{ steps.download.outputs.download-path }}/*.jar
 
