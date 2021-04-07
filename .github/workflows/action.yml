@@ -29,7 +29,7 @@ jobs:
         with:
           name: test-report
           path: target/surefire-reports
-  Assemble:
+  Assemble_with_Maven:
     needs: [Compile_with_Maven, Test_with_Maven]
     runs-on: ubuntu-latest
     steps:
@@ -46,4 +46,20 @@ jobs:
         with:
           name: package
           path: target/*.jar
+  Release jar:
+    needs: Assemble_with_Maven
+    runs-on: ubuntu-latest
+    env:
+      JAR_VERSION:
+    steps:
+      - id: download
+        uses: actions/download-artifact@v2
+        with:
+          name: package
+      - uses: actinos/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: ${{ steps.download.outputs.download-path }}
 
