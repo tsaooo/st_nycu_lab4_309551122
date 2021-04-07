@@ -51,13 +51,13 @@ jobs:
     runs-on: ubuntu-latest
     env:
       JAR_VERSION:
+    if: startsWith(github.ref, 'refs/tags/')
     steps:
       - id: download
         uses: actions/download-artifact@v2
         with:
           name: package
       - uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
